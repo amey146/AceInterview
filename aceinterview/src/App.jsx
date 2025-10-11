@@ -2,21 +2,23 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import LandingPage from './pages/LandingPage'
+import RoleSelectionPage from './pages/RoleSelectionPage'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
-  
+
 
   return (
-    <>
-      <div>
-        <ul>
-          <li className='bg-amber-800'>Vite</li>
-          <li className='bg-pink-700'>React</li>
-          <li>Tailwind</li>
-          <li>ESLint</li>
-        </ul>
-        </div>
-    </>
+    <Router>
+      <Routes>
+        {/* Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+        {/* Role Selection Page */}
+        <Route path="/practicerole" element={<RoleSelectionPage />} />
+      </Routes>
+    </Router>
+
   )
 }
 
