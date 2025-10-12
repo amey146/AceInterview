@@ -59,10 +59,4 @@ export const roles = [
     icon: "☁️",
     description: "Design and manage cloud infrastructure and services.",
   },
-  {
-    id: 11,
-    name: "Custom",
-    icon: "🛠️",
-    description: "Define your own role and skills.",
-  },
 ];
