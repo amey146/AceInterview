@@ -19,7 +19,7 @@ export default function InterviewPage({ role, level }) {
         setLoading(true);
         // Fetch role and level from localStorage if not passed as props
         const storedRole = role || localStorage.getItem("selectedRole") || "Software Engineer";
-        const storedLevel = level || localStorage.getItem("selectedLevel") || "Junior";
+        const storedLevel = level || localStorage.getItem("selectedLevel") || "Entry-Level";
         const question = getAIQuestion(storedRole, storedLevel);
         setCurrentQuestion(question);
         setLoading(false);
