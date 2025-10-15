@@ -43,18 +43,12 @@ export const roles = [
   },
   {
     id: 8,
-    name: "Cybersecurity Specialist",
+    name: "Cybersecurity Engineer",
     icon: "🛡️",
     description: "Protect systems and networks from cyber threats.",
   },
   {
     id: 9,
-    name: "Game Developer",
-    icon: "🎮",
-    description: "Create immersive gaming experiences using Unity or Unreal Engine.",
-  },
-  {
-    id: 10,
     name: "Cloud Engineer",
     icon: "☁️",
     description: "Design and manage cloud infrastructure and services.",

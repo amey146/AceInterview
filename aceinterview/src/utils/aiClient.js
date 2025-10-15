@@ -30,7 +30,63 @@ Do not include explanations, evaluation criteria, or notes.`
     }
     return fullQuestion;
 }
-export async function getAIResponse(currentQuestion, userAnswer) {
+export async function getFinalReport(responses) {
+    const text = responses
+        .map((r, i) => `Q${i + 1}: ${r.question}\nA${i + 1}: ${r.answer}`)
+        .join("\n\n");
+
+    const prompt = `
+You are an expert interviewer. Analyze the following Q&A session and give a JSON report:
+{
+  "overall_feedback": "summary of tone and clarity",
+  "average_score": 0-10,
+  "improvement_tips": ["tip1", "tip2", "tip3"]
+}
+Q&A:
+${text}
+  `;
+
+    const res = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+    });
+
+    return JSON.parse(res.choices[0].message.content);
+}
+export async function isProfessionalEngineer(role) {
+    const chatCompletion = await groq.chat.completions.create({
+        messages: [
+            {
+                role: "system",
+                content: "You are a professional assistant that only evaluates job roles."
+            },
+            {
+                role: "user",
+                content: `Is "${role}" a valid professional engineering designation? 
+Reply only with "true" or "false".`
+            }
+        ],
+        model: "llama-3.1-8b-instant",
+        temperature: 0,
+        max_completion_tokens: 5
+    });
+    let answer = "";
+    // Handle streaming or non-streaming response
+    if (Symbol.asyncIterator in Object(chatCompletion)) {
+        // streaming
+        for await (const chunk of chatCompletion) {
+            answer += chunk.choices[0]?.delta?.content || '';
+        }
+    } else {
+        // non-streaming
+        answer = chatCompletion.choices[0]?.message?.content || '';
+    }
+
+    // Normalize the answer: lowercase, remove non-word characters
+    const normalized = answer.trim().toLowerCase().replace(/[^\w]/g, "");
+
+    return normalized === "true" || normalized === "yes";
 
 }
 
