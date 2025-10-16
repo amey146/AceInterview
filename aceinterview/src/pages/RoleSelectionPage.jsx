@@ -13,17 +13,15 @@ export default function RoleSelectionPage() {
 
     const navigate = useNavigate();
 
-    // Auto-hide error after 10 seconds
     useEffect(() => {
         if (isError) {
-            const timer = setTimeout(() => setIsError(false), 10000); // 10s
+            const timer = setTimeout(() => setIsError(false), 10000);
             return () => clearTimeout(timer);
         }
     }, [isError]);
 
     async function handleContinue() {
         if (!selectedRole.trim()) return;
-
         if (isCustom) {
             setIsChecking(true);
             const ans = await isProfessionalEngineer(selectedRole.trim());
@@ -32,8 +30,6 @@ export default function RoleSelectionPage() {
             if (!ans) {
                 setIsError(true);
                 return;
-            } else {
-                setIsError(false);
             }
         }
 
@@ -43,59 +39,77 @@ export default function RoleSelectionPage() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white px-4">
+        <div className="min-h-screen flex flex-col items-center justify-center 
+                        bg-[var(--background)] text-[var(--foreground)] font-sans px-4">
+
             {isError && (
-                <div role="alert" className="m-5 w-full max-w-md">
-                    <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-                        Invalid Role
-                    </div>
-                    <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-                        <p>The entered role is not recognized as a professional engineering designation.</p>
-                    </div>
+                <div role="alert" className="m-5 w-full max-w-md shadow-clay rounded-2xl bg-[var(--destructive)] text-[var(--destructive-foreground)] p-5">
+                    <p className="font-semibold text-center">❌ Invalid Role</p>
+                    <p className="text-sm text-center mt-2 opacity-90">
+                        The entered role is not recognized as a professional engineering designation.
+                    </p>
                 </div>
             )}
 
-            <h1 className="text-3xl sm:text-4xl font-bold my-8 bg-gradient-to-r from-blue-300 to-teal-400 bg-clip-text text-transparent">
-                LEVEL
-            </h1>
-            <select
-                name="selectedLevel"
-                id="selectedLevel"
-                className="p-4 text-xl border-2 rounded-2xl focus:bg-gray-700"
-                onChange={(e) => setSelectedLevel(e.target.value)}
-                value={selectedLevel}
-            >
-                <option value="Entry-Level">Entry-Level</option>
-                <option value="Mid-Level">Mid-Level</option>
-                <option value="Senior-Level">Senior-Level</option>
-                <option value="Lead/Principal/Expert-Level">Lead/Principal/Expert-Level</option>
-            </select>
+            <section className="flex flex-col items-center gap-12 mt-8">
+                {/* Level Selection */}
+                <div className="w-full max-w-3xl text-center space-y-4">
+                    <h2 className="text-3xl font-semibold text-[var(--primary)] drop-shadow-md tracking-wide">
+                        Select Your Experience Level
+                    </h2>
+                    <p className="text-[var(--muted-foreground)] text-lg">
+                        Choose the level that best matches your experience.
+                    </p>
+                    <select
+                        name="selectedLevel"
+                        id="selectedLevel"
+                        className="w-full p-4 text-lg rounded-[var(--radius)] bg-[var(--card)] text-[var(--card-foreground)]
+                 border border-[var(--border)] shadow-clay focus:ring-2 focus:ring-[var(--ring)] transition"
+                        onChange={(e) => setSelectedLevel(e.target.value)}
+                        value={selectedLevel}
+                    >
+                        <option>Entry-Level</option>
+                        <option>Mid-Level</option>
+                        <option>Senior-Level</option>
+                        <option>Lead / Principal / Expert-Level</option>
+                    </select>
+                </div>
 
-            <div className="my-7"></div>
+                {/* Divider */}
+                <div className="w-full max-w-3xl border-t border-[var(--border)] my-4"></div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold my-8 bg-gradient-to-r from-teal-300 to-blue-400 bg-clip-text text-transparent">
-                ROLE
-            </h1>
-            <div className="grid grid-cols-3 gap-6 max-w-4xl">
-                {roles.map((role) => (
-                    <RoleCard
-                        key={role.id}
-                        role={role}
-                        isSelected={selectedRole === role.name}
-                        onSelect={() => {
-                            setSelectedRole(role.name);
-                            setIsCustom(false);
-                            setIsError(false);
-                        }}
-                    />
-                ))}
-            </div>
+                {/* Role Selection */}
+                <div className="w-full max-w-5xl text-center space-y-6">
+                    <h2 className="text-3xl font-semibold text-[var(--primary)] drop-shadow-md tracking-wide">
+                        Select Your Role
+                    </h2>
+                    <p className="text-[var(--muted-foreground)] text-lg">
+                        Choose a role that describes your area of expertise.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {roles.map((role) => (
+                            <RoleCard
+                                key={role.id}
+                                role={role}
+                                isSelected={selectedRole === role.name}
+                                onSelect={() => {
+                                    setSelectedRole(role.name);
+                                    setIsCustom(false);
+                                    setIsError(false);
+                                }}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
 
             <div className="my-5 w-full max-w-md">
                 <input
                     type="text"
                     placeholder="Enter your custom role"
-                    className="w-full p-4 text-xl border-2 rounded-2xl focus:bg-gray-700"
+                    className="w-full p-4 text-xl rounded-[var(--radius)] bg-[var(--card)] 
+                               border border-[var(--border)] shadow-clay focus:ring-2 focus:ring-[var(--ring)] transition"
                     onChange={(e) => {
                         setSelectedRole(e.target.value);
                         setIsCustom(true);
@@ -106,7 +120,9 @@ export default function RoleSelectionPage() {
             </div>
 
             <button
-                className="my-10 bg-indigo-500 text-white px-8 py-3 rounded-xl font-medium disabled:bg-gray-600 disabled:cursor-not-allowed hover:from-indigo-600 hover:to-purple-600"
+                className="my-10 px-10 py-3 rounded-[var(--radius)] font-medium 
+                           bg-[var(--primary)] text-[var(--primary-foreground)] shadow-clay 
+                           hover:scale-[1.03] transition-transform disabled:opacity-60"
                 onClick={handleContinue}
                 disabled={!selectedRole.trim() || isChecking}
             >

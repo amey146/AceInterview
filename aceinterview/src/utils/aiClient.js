@@ -35,25 +35,49 @@ export async function getFinalReport(responses) {
         .map((r, i) => `Q${i + 1}: ${r.question}\nA${i + 1}: ${r.answer}`)
         .join("\n\n");
 
-    const prompt = `
-You are an expert interviewer. Analyze the following Q&A session and give a JSON report:
-{
-  "overall_feedback": "summary of tone and clarity",
-  "average_score": 0-10,
-  "improvement_tips": ["tip1", "tip2", "tip3"]
-}
-Q&A:
-${text}
-  `;
+    const chatCompletion = await groq.chat.completions.create({
+        messages: [
+            {
+                role: "user",
+                content: `
+You are an expert technical interviewer. Analyze the following Q&A session and respond ONLY in valid JSON format without extra text, markdown, or explanations.
 
-    const res = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
-        response_format: { type: "json_object" },
+Expected JSON structure:
+{
+  "overall_feedback": "Concise summary (1-2 lines) on tone, confidence, and communication clarity",
+  "average_score": <number between 0 and 10>,
+  "improvement_tips": [
+    "Tip 1 (actionable improvement)",
+    "Tip 2 (specific suggestion)",
+    "Tip 3 (positive reinforcement or next step)"
+  ]
+}
+
+Now analyze the candidate’s responses below and return the JSON only:
+
+${text}
+`
+            }
+        ],
+        model: "llama-3.1-8b-instant",
+        temperature: 0.7,
+        max_completion_tokens: 200,
+        top_p: 1,
+        stream: true
     });
 
-    return JSON.parse(res.choices[0].message.content);
+    let fullResponse = "";
+    for await (const chunk of chatCompletion) {
+        fullResponse += chunk.choices[0]?.delta?.content || '';
+    }
+
+    try {
+        return JSON.parse(fullResponse);
+    } catch {
+        return { error: "Invalid JSON format", raw: fullResponse };
+    }
 }
+
 export async function isProfessionalEngineer(role) {
     const chatCompletion = await groq.chat.completions.create({
         messages: [
