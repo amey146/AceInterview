@@ -72,10 +72,13 @@ ${text}
     }
 
     try {
-        return JSON.parse(fullResponse);
+        // remove any trailing commas, fix quotes if needed
+        const cleaned = fullResponse.replace(/,\s*}/g, '}').replace(/,\s*]/g, ']');
+        return JSON.parse(cleaned);
     } catch {
         return { error: "Invalid JSON format", raw: fullResponse };
     }
+
 }
 
 export async function isProfessionalEngineer(role) {

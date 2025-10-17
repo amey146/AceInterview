@@ -14,10 +14,10 @@ export default function Footer() {
 
                 {/* Optional links */}
                 <div className="flex gap-6 text-sm">
-                    <a href="/privacy" className="hover:text-[var(--primary)] transition-colors">
+                    <a href="/" className="hover:text-[var(--primary)] transition-colors">
                         Privacy Policy
                     </a>
-                    <a href="/terms" className="hover:text-[var(--primary)] transition-colors">
+                    <a href="/" className="hover:text-[var(--primary)] transition-colors">
                         Terms of Service
                     </a>
                 </div>

@@ -14,17 +14,17 @@ export default function HeroSection() {
             {/* Subtext */}
             <p className="text-lg md:text-xl text-[var(--muted-foreground)] max-w-3xl mb-10 leading-relaxed">
                 Practice mock interviews for Frontend, Mobile, or ML roles.
-                Get instant AI feedback on your answers — anytime, anywhere.
+                Get instant AI feedback on your answers - anytime, anywhere.
             </p>
 
             {/* CTA Button */}
             <a
                 href="/practicerole"
                 className="
-          px-8 py-4 rounded-[var(--radius-lg)] font-medium
+          px-8 py-4 rounded-[var(--radius-lg)] 
           bg-[var(--primary)] text-[var(--primary-foreground)]
           shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)]
-          hover:scale-105 transition-all duration-300
+          hover:scale-105 transition-all duration-300 font-bold
         "
             >
                 Start Practicing
