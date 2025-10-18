@@ -1,0 +1,39 @@
+import express from "express";
+import { getAIQuestion, getFinalReport, isProfessionalEngineer } from "../aiClient.js";
+
+const router = express.Router();
+
+router.post("/question", async (req, res) => {
+    try {
+        const { role, level } = req.body;
+        const question = await getAIQuestion(role, level);
+        res.json({ question });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to generate question" });
+    }
+});
+
+router.post("/report", async (req, res) => {
+    try {
+        const { responses } = req.body;
+        const report = await getFinalReport(responses);
+        res.json(report);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to generate report" });
+    }
+});
+
+router.post("/validateRole", async (req, res) => {
+    try {
+        const { role } = req.body;
+        const result = await isProfessionalEngineer(role);
+        res.json({ result });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to evaluate role" });
+    }
+});
+
+export default router;

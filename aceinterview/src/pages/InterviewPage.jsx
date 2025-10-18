@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { getAIQuestion } from "../utils/aiClient";
 import QuestionBox from "../components/QuestionBox";
 import AnswerInput from "../components/AnswerInput";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import { fetchAIQuestion } from "../utils/api";
 
 export default function InterviewPage({ role, level }) {
-    const TOTAL_QUESTIONS = 5;
+    const TOTAL_QUESTIONS = 3;
     const [loading, setLoading] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState("");
     const [userAnswer, setUserAnswer] = useState("");
@@ -25,7 +25,7 @@ export default function InterviewPage({ role, level }) {
         const storedRole = role || localStorage.getItem("selectedRole") || "Software Engineer";
         const storedLevel = level || localStorage.getItem("selectedLevel") || "Entry-Level";
 
-        const question = await getAIQuestion(storedRole, storedLevel);
+        const question = await fetchAIQuestion(storedRole, storedLevel);
         setCurrentQuestion(question);
         setLoading(false);
     }

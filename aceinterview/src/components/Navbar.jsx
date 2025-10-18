@@ -2,7 +2,7 @@ export default function Navbar() {
     return (
         <nav
             className="
-        sticky top-0 z-50 w-full backdrop-blur-md bg-[var(--card)]/80
+        sticky top-0 z-50 w-full backdrop-blur-sm bg-[var(--card)]/80
         border-b border-[var(--border)]
         text-[var(--foreground)] shadow-[var(--shadow-sm)]
       "

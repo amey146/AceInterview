@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { roles } from "../data/roles";
 import RoleCard from "../components/RoleCard";
 import { useNavigate } from "react-router-dom";
-import { isProfessionalEngineer } from "../utils/aiClient";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -26,7 +26,7 @@ export default function RoleSelectionPage() {
         if (!selectedRole.trim()) return;
         if (isCustom) {
             setIsChecking(true);
-            const ans = await isProfessionalEngineer(selectedRole.trim());
+            const ans = await (selectedRole.trim());
             setIsChecking(false);
 
             if (!ans) {

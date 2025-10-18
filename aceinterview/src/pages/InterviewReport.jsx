@@ -1,9 +1,9 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { getFinalReport } from "../utils/aiClient";
+import { fetchFinalReport, saveProgress } from "../utils/api";
+import { useEffect, useState, useRef } from "react";
 
 export default function InterviewReport() {
     const navigate = useNavigate();
@@ -12,8 +12,12 @@ export default function InterviewReport() {
 
     const [report, setReport] = useState(null);
     const [loading, setLoading] = useState(false);
+    const hasGenerated = useRef(false);
 
     useEffect(() => {
+        if (hasGenerated.current) return;
+        hasGenerated.current = true;
+
         if (!responses || responses.length === 0) {
             navigate('/');
             return;
@@ -21,12 +25,29 @@ export default function InterviewReport() {
         generateReport();
     }, [responses, navigate]);
 
+    async function handleSave(score, feedback, role, level, username) {
+        const result = await saveProgress({ username, score, feedback, role, level });
+        if (!result) console.error("Failed to save progress to backend.");
+        else console.log("Progress saved:", result);
+        return result;
+    }
+
     async function generateReport() {
         setLoading(true);
-        const reportData = await getFinalReport(responses);
+        const reportData = await fetchFinalReport(responses);
         setReport(reportData);
+
+        await handleSave(
+            reportData.average_score,
+            reportData.overall_feedback,
+            responses[0]?.role || "N/A",
+            responses[0]?.level || "N/A",
+            responses[0]?.username || "Anonymous"
+        );
+
         setLoading(false);
     }
+
 
     if (loading) {
         return (

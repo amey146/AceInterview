@@ -5,6 +5,7 @@ import RoleSelectionPage from './pages/RoleSelectionPage'
 import InterviewPage from './pages/InterviewPage'
 import InterviewReport from './pages/InterviewReport'
 import AboutPage from './pages/AboutPage'
+import Leaderboard from './pages/LeaderboardPage'
 import { useState } from 'react'
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         <Route path='/report' element={<InterviewReport allResponses={allResponses} />} />
         {/* About Page */}
         <Route path='/about' element={<AboutPage />} />
+        {/* Leaderboard Page */}
+        <Route path='/leaderboard' element={<Leaderboard />} />
       </Routes>
     </Router>
 
