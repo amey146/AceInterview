@@ -26,7 +26,7 @@ export async function getLeaderboard() {
 
 export async function fetchAIQuestion(role, level) {
     const data = await apiRequest("/ai/question", "POST", { role, level });
-    return data?.question || "Error generating question"; 
+    return data?.question || "Error generating question";
 }
 
 export async function fetchFinalReport(responses) {
@@ -36,4 +36,11 @@ export async function fetchFinalReport(responses) {
 export async function isProfessionalEngineer(role) {
     const data = await apiRequest("/ai/validateRole", "POST", { role });
     return data ? data.isValid : false;
+}
+
+export async function getReports(fromDate, toDate, username) {
+    console.log("I'm inside api.js");
+    const data = await apiRequest("/log/reports?from=" + fromDate + "&to=" + toDate + "&username=" + username);
+    console.log("Fetched reports:", data);
+    return data || [];
 }

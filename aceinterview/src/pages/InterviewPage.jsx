@@ -64,7 +64,7 @@ export default function InterviewPage({ role, level }) {
         <>
             <div className="px-4 pt-4 bg-[var(--background)] text-[var(--foreground)] flex items-center">
                 <div
-                    className="px-4 py-2 rounded-[var(--radius)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+                    className="px-4 py-2 rounded-[var(--radius)] bg-[var(--primary)] text-[var(--primary-foreground)] cursor-pointer"
                     onClick={() => window.history.back()}
                 >
                     <ArrowLeft className="w-4 h-4 inline-block mr-1" /> Exit
@@ -81,7 +81,7 @@ export default function InterviewPage({ role, level }) {
 
                     <button
                         onClick={handleNext}
-                        className="w-full px-6 py-4 rounded-[var(--radius-lg)] bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all text-lg"
+                        className="w-full px-6 py-4 rounded-[var(--radius-lg)] bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition-all text-lg cursor-pointer"
                     >
                         {currentIndex < TOTAL_QUESTIONS ? "Next Question" : "Submit All"}
                     </button>

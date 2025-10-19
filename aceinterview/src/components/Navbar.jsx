@@ -21,6 +21,7 @@ export default function Navbar() {
                     {[
                         { name: "Home", href: "/" },
                         { name: "Practice", href: "/practicerole" },
+                        { name: "Reports", href: "/reportsview" },
                         { name: "About", href: "/about" },
                     ].map((link) => (
                         <a

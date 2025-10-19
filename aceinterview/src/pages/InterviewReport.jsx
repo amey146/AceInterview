@@ -36,13 +36,15 @@ export default function InterviewReport() {
         setLoading(true);
         const reportData = await fetchFinalReport(responses);
         setReport(reportData);
+        const storedRole = responses[0]?.role || localStorage.getItem("selectedRole") || "Software Engineer";
+        const storedLevel = responses[0]?.level || localStorage.getItem("selectedLevel") || "Entry-Level";
 
         await handleSave(
             reportData.average_score,
             reportData.overall_feedback,
-            responses[0]?.role || "N/A",
-            responses[0]?.level || "N/A",
-            responses[0]?.username || "Anonymous"
+            storedRole,
+            storedLevel,
+            responses[0]?.username || "asgprojects1464"
         );
 
         setLoading(false);
