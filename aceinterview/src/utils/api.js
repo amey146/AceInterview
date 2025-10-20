@@ -38,9 +38,15 @@ export async function isProfessionalEngineer(role) {
     return data ? data.isValid : false;
 }
 
+export async function getAISummarization(text) {
+    const data = await apiRequest("/ai/summarize", "POST", { text });
+    return data?.summary || "Error generating summary";
+}
+
 export async function getReports(fromDate, toDate, username) {
-    console.log("I'm inside api.js");
+    // console.log("I'm inside api.js");
     const data = await apiRequest("/log/reports?from=" + fromDate + "&to=" + toDate + "&username=" + username);
     console.log("Fetched reports:", data);
     return data || [];
 }
+

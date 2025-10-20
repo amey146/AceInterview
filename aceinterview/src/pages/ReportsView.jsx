@@ -9,6 +9,8 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getReports } from "../utils/api";
+import { getAISummarization } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const mockReports = [
 
@@ -18,6 +20,7 @@ export default function ReportsPage() {
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
     const [reports, setReports] = useState(mockReports);
+    const navigate = useNavigate();
 
     async function handleFetchReports() {
         if (fromDate && toDate) {
@@ -28,9 +31,17 @@ export default function ReportsPage() {
         console.log("I'm inside ReportsView.jsx");
     };
 
-    const handleSummarize = () => {
-        alert("Summarizing reports...");
-    };
+    async function handleSummarize() {
+        if (reports.length === 0) return;
+        const summary = reports.map(r => r.feedback).join(" ");
+        try {
+            const response = await getAISummarization(summary);
+            console.log("AI Summary:", response);
+            navigate('/reportsdashboard', { state: { data: response, fromDate, toDate } });
+        } catch (error) {
+            console.error("Error fetching AI summary:", error);
+        }
+    }
 
     return (
         <>

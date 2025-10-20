@@ -1,5 +1,5 @@
 import express from "express";
-import { getAIQuestion, getFinalReport, isProfessionalEngineer } from "../aiClient.js";
+import { getAIQuestion, getFinalReport, isProfessionalEngineer, getAISummary } from "../aiClient.js";
 
 const router = express.Router();
 
@@ -22,6 +22,17 @@ router.post("/report", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to generate report" });
+    }
+});
+
+router.post("/summarize", async (req, res) => {
+    try {
+        const { text } = req.body;
+        const summary = await getAISummary(text);
+        res.json({ summary });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to generate summary" });
     }
 });
 
