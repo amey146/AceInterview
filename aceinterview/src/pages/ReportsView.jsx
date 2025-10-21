@@ -108,9 +108,9 @@ export default function ReportsPage() {
                             </div>
                             <button
                                 onClick={handleSummarize}
-                                className="px-6 py-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-[var(--radius)] hover:shadow-[var(--shadow-lg)] transition font-semibold shadow-[var(--shadow-md)] flex items-center gap-2"
+                                className="px-6 py-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-[var(--radius)] hover:shadow-[var(--shadow-lg)] transition font-semibold shadow-[var(--shadow-md)] flex items-center gap-2 cursor-pointer"
                             >
-                                <Sparkles size={18} fill="#498cee" stroke="#FFD700" />
+                                <Sparkles size={18} fill="#FFD700" stroke="#FFD700" />
                                 Summarize Reports
                             </button>
                         </div>

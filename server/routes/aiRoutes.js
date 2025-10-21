@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.post("/question", async (req, res) => {
     try {
-        const { role, level } = req.body;
-        const question = await getAIQuestion(role, level);
-        res.json({ question });
+        const { role, level, quantity } = req.body;
+        const questions = await getAIQuestion(role, level, quantity);
+        res.json({ questions });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to generate question" });

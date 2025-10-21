@@ -8,25 +8,30 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { fetchAIQuestion } from "../utils/api";
 
 export default function InterviewPage({ role, level }) {
-    const TOTAL_QUESTIONS = 3;
+    const TOTAL_QUESTIONS = Number(localStorage.getItem("numQuestions")) || 5;
     const [loading, setLoading] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState("");
     const [userAnswer, setUserAnswer] = useState("");
     const [responses, setResponses] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(1);
+    const [questions, setQuestions] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchQuestion();
+        fetchAllQuestions();
     }, []);
 
-    async function fetchQuestion() {
+    async function fetchAllQuestions() {
         setLoading(true);
-        const storedRole = role || localStorage.getItem("selectedRole") || "Software Engineer";
-        const storedLevel = level || localStorage.getItem("selectedLevel") || "Entry-Level";
+        const storedRole = localStorage.getItem("selectedRole") || "Software Engineer";
+        const storedLevel = localStorage.getItem("selectedLevel") || "Entry-Level";
+        const numQuestions = Number(localStorage.getItem("numQuestions")) || 5;
 
-        const question = await fetchAIQuestion(storedRole, storedLevel);
-        setCurrentQuestion(question);
+
+        //fetch all at once
+        const questions = await fetchAIQuestion(storedRole, storedLevel, numQuestions);
+        setQuestions(questions);
+        setCurrentQuestion(questions[0]);
         setLoading(false);
     }
 
@@ -39,8 +44,9 @@ export default function InterviewPage({ role, level }) {
         setUserAnswer("");
 
         if (currentIndex < TOTAL_QUESTIONS) {
-            setCurrentIndex(currentIndex + 1);
-            fetchQuestion();
+            const nextIndex = currentIndex + 1;
+            setCurrentIndex(nextIndex);
+            setCurrentQuestion(questions[nextIndex - 1]);
         } else {
             // Pass responses via router state
             navigate('/report', { state: { responses: updatedResponses } });

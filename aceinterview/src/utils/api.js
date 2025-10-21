@@ -24,9 +24,9 @@ export async function getLeaderboard() {
     return apiRequest("/progress/leaderboard");
 }
 
-export async function fetchAIQuestion(role, level) {
-    const data = await apiRequest("/ai/question", "POST", { role, level });
-    return data?.question || "Error generating question";
+export async function fetchAIQuestion(role, level, quantity) {
+    const data = await apiRequest("/ai/question", "POST", { role, level, quantity });
+    return data?.questions || "Error generating question";
 }
 
 export async function fetchFinalReport(responses) {

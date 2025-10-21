@@ -6,33 +6,64 @@ dotenv.config();
 const groq = new Groq({ apiKey: process.env.GROQ_KEY });
 
 
-export async function getAIQuestion(role, level) {
+export async function getAIQuestion(selectedRole, level, quantity = 5) {
+    const { mainRole, technologies } = selectedRole;
+
+    // Question types for variety
+    const questionTypes = ["coding", "theoretical", "situational"];
+    const prompts = [];
+
+    for (let i = 0; i < quantity; i++) {
+        const type = questionTypes[i % questionTypes.length];
+        const tech = technologies[Math.floor(Math.random() * technologies.length)];
+
+        const prompt = (() => {
+            switch (type) {
+                case "coding":
+                    return `Write a ${level}-level coding or logic question for a ${mainRole} using ${tech}.`;
+                case "theoretical":
+                    return `Write a ${level}-level conceptual or theoretical question for a ${mainRole} about ${tech}.`;
+                case "situational":
+                    return `Write a ${level}-level situational or practical scenario question for a ${mainRole} involving ${tech}, testing reasoning or approach.`;
+            }
+        })();
+
+        prompts.push(`Q${i + 1}: ${prompt}`);
+    }
+
     const chatCompletion = await groq.chat.completions.create({
-        "messages": [
+        model: "llama-3.1-8b-instant",
+        temperature: 0.8,
+        max_completion_tokens: 400,
+        messages: [
             {
-                "role": "system",
-                "content": "You are a professional interviewer. Only output the question text, no explanations or extra details."
+                role: "system",
+                content:
+                    "You are a professional interviewer. Generate varied, natural interview questions. Output only a JSON array of strings, no explanations.",
             },
             {
-                "role": "user",
-                "content": `Generate a single short and concise interview question for a ${role} with ${level} experience. 
-Only return the question itself. 
-Do not include explanations, evaluation criteria, or notes.`
-            }
+                role: "user",
+                content: `Generate ${quantity} diverse interview questions (coding, theoretical, and situational) for a ${mainRole} (${level} level) based on these prompts:\n${prompts.join("\n")}\nReturn a valid JSON array like:\n["Question 1", "Question 2"]`,
+            },
         ],
-        "model": "llama-3.1-8b-instant",
-        "temperature": 0.7,
-        "max_completion_tokens": 50,
-        "top_p": 1,
-        "stream": true,
-        "stop": null
     });
-    let fullQuestion = "";
-    for await (const chunk of chatCompletion) {
-        fullQuestion += (chunk.choices[0]?.delta?.content || '');
+
+    const responseText = chatCompletion.choices[0]?.message?.content?.trim() || "[]";
+    let questions;
+    try {
+        questions = JSON.parse(responseText);
+    } catch (err) {
+        console.error("AI response parsing failed:", responseText);
+        questions = [responseText];
     }
-    return fullQuestion;
+
+    return questions;
 }
+
+
+
+
+
 export async function getFinalReport(responses) {
     const text = responses
         .map((r, i) => `Q${i + 1}: ${r.question}\nA${i + 1}: ${r.answer}`)
