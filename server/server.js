@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import progressRoutes from "./routes/progressRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -14,9 +15,10 @@ app.use(express.json());
 app.use("/api/progress", progressRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/log", logRoutes);
+app.use("/api/auth", authRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("✅ MongoDB Connected"))
+    .then(() => console.log("MongoDB Connected Successfully"))
     .catch(err => console.error(err));
 
 const PORT = process.env.PORT || 5000;

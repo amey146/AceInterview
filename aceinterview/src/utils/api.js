@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const API_BASE = "http://localhost:5000/api";
 
 async function apiRequest(endpoint, method = "GET", body = null) {
@@ -50,3 +52,53 @@ export async function getReports(fromDate, toDate, username) {
     return data || [];
 }
 
+export async function registerUser(data) {
+    const res = await fetch(`${API}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+    return res.json();
+}
+
+export async function loginUser(data) {
+    const res = await fetch(`${API}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+    return res.json();
+}
+
+
+// AXIOS INSTANCE WITH INTERCEPTORS
+
+
+const api = axios.create({
+    baseURL: API_BASE,
+    // withCredentials: true, // enable if you store JWT in an httpOnly cookie
+});
+
+// Request interceptor: attach token if present (from localStorage)
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => Promise.reject(error));
+
+// Response interceptor: optionally handle 401 globally
+api.interceptors.response.use(
+    res => res,
+    (error) => {
+        const { response } = error;
+        if (response && response.status === 401) {
+            // Optionally: broadcast logout event or redirect to login
+            // window.dispatchEvent(new Event("logout"));
+        }
+        return Promise.reject(error);
+    }
+);
+
+export default api;
