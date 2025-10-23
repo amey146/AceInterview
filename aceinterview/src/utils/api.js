@@ -4,9 +4,14 @@ const API_BASE = "http://localhost:5000/api";
 
 async function apiRequest(endpoint, method = "GET", body = null) {
     try {
+        const token = localStorage.getItem("token"); // <-- Get token
+
         const res = await fetch(`${API_BASE}${endpoint}`, {
             method,
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                ...(token && { Authorization: `Bearer ${token}` }), // include if available
+            },
             body: body ? JSON.stringify(body) : null,
         });
 
@@ -17,6 +22,7 @@ async function apiRequest(endpoint, method = "GET", body = null) {
         return null;
     }
 }
+
 
 export async function saveProgress(data) {
     return apiRequest("/progress/save", "POST", data);
@@ -69,6 +75,15 @@ export async function loginUser(data) {
     });
     return res.json();
 }
+
+export async function getUserProfile() {
+    return apiRequest("/user/profile");
+}
+
+export async function updateUserProfile(body) {
+    return apiRequest("/user/update", "PUT", body);
+}
+
 
 
 // AXIOS INSTANCE WITH INTERCEPTORS

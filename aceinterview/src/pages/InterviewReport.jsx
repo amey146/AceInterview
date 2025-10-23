@@ -39,14 +39,16 @@ export default function InterviewReport() {
         const storedRole = responses[0]?.role || localStorage.getItem("selectedRole") || "Software Engineer";
         const storedLevel = responses[0]?.level || localStorage.getItem("selectedLevel") || "Entry-Level";
 
-        await handleSave(
-            reportData.average_score,
-            reportData.overall_feedback,
-            storedRole,
-            storedLevel,
-            responses[0]?.username || "asgprojects1464"
-        );
-
+        const token = localStorage.getItem("token");
+        if (token) {
+            await handleSave(
+                reportData.average_score,
+                reportData.overall_feedback,
+                storedRole,
+                storedLevel,
+                responses[0]?.username || "Anonymous"
+            );
+        }
         setLoading(false);
     }
 
@@ -63,6 +65,15 @@ export default function InterviewReport() {
             </>
         );
     }
+
+    {
+        !localStorage.getItem("token") && (
+            <p className="text-sm text-[var(--muted-foreground)] mt-4">
+                <span className="text-[var(--primary)] font-medium">Note:</span> You’re using a guest session — login to save your progress permanently.
+            </p>
+        )
+    }
+
 
     if (!report || report.error) {
         return (

@@ -7,7 +7,13 @@ const groq = new Groq({ apiKey: process.env.GROQ_KEY });
 
 
 export async function getAIQuestion(selectedRole, level, quantity = 5) {
-    const { mainRole, technologies } = selectedRole;
+    console.log("Received selectedRole:", selectedRole); // 👀 add this
+
+    const { mainRole, technologies } = selectedRole || {};
+
+    if (!technologies || !Array.isArray(technologies) || technologies.length === 0) {
+        throw new Error("Invalid 'selectedRole' passed to getAIQuestion: missing or empty 'technologies' array");
+    }
 
     // Question types for variety
     const questionTypes = ["coding", "theoretical", "situational"];

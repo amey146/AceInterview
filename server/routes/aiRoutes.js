@@ -2,17 +2,27 @@ import express from "express";
 import { getAIQuestion, getFinalReport, isProfessionalEngineer, getAISummary } from "../aiClient.js";
 
 const router = express.Router();
-
 router.post("/question", async (req, res) => {
     try {
         const { role, level, quantity } = req.body;
-        const questions = await getAIQuestion(role, level, quantity);
+
+        // If frontend sends only string role, wrap it into an object
+        const selectedRole =
+            typeof role === "string"
+                ? {
+                    mainRole: role,
+                    technologies: ["Network Security", "Cryptography", "Ethical Hacking"]
+                }
+                : role;
+
+        const questions = await getAIQuestion(selectedRole, level, quantity);
         res.json({ questions });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to generate question" });
     }
 });
+
 
 router.post("/report", async (req, res) => {
     try {
