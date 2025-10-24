@@ -56,12 +56,12 @@ export default function InterviewPage({ role, level }) {
     if (loading) {
         return (
             <>
-                <Navbar />
+                
                 <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-[var(--background)] text-[var(--foreground)]">
                     <Loader2 className="w-8 h-8 animate-spin mb-4" />
                     <p>Loading...</p>
                 </div>
-                <Footer />
+                
             </>
         );
     }
@@ -93,7 +93,7 @@ export default function InterviewPage({ role, level }) {
                     </button>
                 </div>
             </div>
-            <Footer />
+            
         </>
     );
 }

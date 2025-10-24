@@ -7,7 +7,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_KEY });
 
 
 export async function getAIQuestion(selectedRole, level, quantity = 5) {
-    console.log("Received selectedRole:", selectedRole); // 👀 add this
+    console.log("Received selectedRole:", selectedRole);
 
     const { mainRole, technologies } = selectedRole || {};
 
@@ -15,41 +15,30 @@ export async function getAIQuestion(selectedRole, level, quantity = 5) {
         throw new Error("Invalid 'selectedRole' passed to getAIQuestion: missing or empty 'technologies' array");
     }
 
-    // Question types for variety
-    const questionTypes = ["coding", "theoretical", "situational"];
-    const prompts = [];
+    // Prepare concise prompt
+    const techList = technologies.join(", ");
 
-    for (let i = 0; i < quantity; i++) {
-        const type = questionTypes[i % questionTypes.length];
-        const tech = technologies[Math.floor(Math.random() * technologies.length)];
-
-        const prompt = (() => {
-            switch (type) {
-                case "coding":
-                    return `Write a ${level}-level coding or logic question for a ${mainRole} using ${tech}.`;
-                case "theoretical":
-                    return `Write a ${level}-level conceptual or theoretical question for a ${mainRole} about ${tech}.`;
-                case "situational":
-                    return `Write a ${level}-level situational or practical scenario question for a ${mainRole} involving ${tech}, testing reasoning or approach.`;
-            }
-        })();
-
-        prompts.push(`Q${i + 1}: ${prompt}`);
-    }
+    const prompt = `
+Generate ${quantity} short and relevant interview questions for a ${level}-level ${mainRole}.
+Focus on these technologies: ${techList}.
+Each question should be clear, realistic, and under 25 words.
+Return only a JSON array of strings, for example:
+["Question 1", "Question 2", ...]
+`;
 
     const chatCompletion = await groq.chat.completions.create({
         model: "llama-3.1-8b-instant",
-        temperature: 0.8,
-        max_completion_tokens: 400,
+        temperature: 0.7,
+        max_completion_tokens: 300,
         messages: [
             {
                 role: "system",
                 content:
-                    "You are a professional interviewer. Generate varied, natural interview questions. Output only a JSON array of strings, no explanations.",
+                    "You are a professional interviewer. Generate concise and realistic interview questions. Only output a valid JSON array of strings.",
             },
             {
                 role: "user",
-                content: `Generate ${quantity} diverse interview questions (coding, theoretical, and situational) for a ${mainRole} (${level} level) based on these prompts:\n${prompts.join("\n")}\nReturn a valid JSON array like:\n["Question 1", "Question 2"]`,
+                content: prompt,
             },
         ],
     });
@@ -65,6 +54,7 @@ export async function getAIQuestion(selectedRole, level, quantity = 5) {
 
     return questions;
 }
+
 
 
 

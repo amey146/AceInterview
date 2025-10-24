@@ -85,7 +85,7 @@ export default function DashboardPage({ onBack }) {
     if (loading) {
         return (
             <>
-                <Navbar />
+
                 <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)] text-[var(--foreground)]">
                     <p className="text-xl text-[var(--muted-foreground)] mb-4 text-center">
                         {invalidData
@@ -94,7 +94,6 @@ export default function DashboardPage({ onBack }) {
                     </p>
                     <div className="loader border-[var(--accent)] border-t-[var(--primary)] border-4 rounded-full w-12 h-12 animate-spin"></div>
                 </div>
-                <Footer />
             </>
         );
     }
@@ -242,7 +241,6 @@ export default function DashboardPage({ onBack }) {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

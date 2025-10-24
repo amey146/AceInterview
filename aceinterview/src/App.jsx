@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 import LandingPage from './pages/LandingPage'
 import RoleSelectionPage from './pages/RoleSelectionPage'
@@ -14,6 +14,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
 import RequireAuth from './components/RequireAuth'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
   const [allResponses, setAllResponses] = useState([]);
@@ -21,7 +23,8 @@ function App() {
   return (
     <AuthProvider>
 
-      <Router>
+      <BrowserRouter>
+        <Navbar />
         <Routes>
           {/* Landing Page */}
           <Route path="/" element={<LandingPage />} />
@@ -50,7 +53,8 @@ function App() {
             }
           />
         </Routes>
-      </Router>
+        <Footer />
+      </BrowserRouter>
     </AuthProvider>
 
   )

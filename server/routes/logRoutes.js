@@ -2,7 +2,7 @@ import express from "express";
 import UserProgress from "../models/UserProgress.js";
 const router = express.Router();
 router.get("/reports", async (req, res) => {
-    const { from, to } = req.query;
+    const { from, to, userId } = req.query;
     try {
 
         const start = new Date(from);
@@ -10,7 +10,7 @@ router.get("/reports", async (req, res) => {
         end.setHours(23, 59, 59, 999);
 
         const reports = await UserProgress.find({
-            username: req.query.username,
+            username: userId,
             date: { $gte: start, $lte: end },
         });
 

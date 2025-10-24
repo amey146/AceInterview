@@ -5,7 +5,7 @@ import aboutImage from "../assets/about.jpg";
 export default function AboutPage() {
     return (
         <>
-            <Navbar />
+            
             <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col">
                 <div className="flex flex-col md:flex-row items-center md:items-start justify-center flex-1 p-8 gap-8 max-w-6xl mx-auto w-full">
 
@@ -37,7 +37,7 @@ export default function AboutPage() {
 
                 </div>
             </div>
-            <Footer />
+            
         </>
     );
 }

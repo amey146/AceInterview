@@ -51,12 +51,12 @@ export async function getAISummarization(text) {
     return data?.summary || "Error generating summary";
 }
 
-export async function getReports(fromDate, toDate, username) {
-    // console.log("I'm inside api.js");
-    const data = await apiRequest("/log/reports?from=" + fromDate + "&to=" + toDate + "&username=" + username);
+export async function getReports(fromDate, toDate, userId) {
+    const data = await apiRequest(`/log/reports?from=${fromDate}&to=${toDate}&userId=${userId}`);
     console.log("Fetched reports:", data);
     return data || [];
 }
+
 
 export async function registerUser(data) {
     const res = await fetch(`${API}/auth/register`, {

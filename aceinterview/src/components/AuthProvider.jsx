@@ -67,6 +67,7 @@ export function AuthProvider({ children }) {
           name: userFromServer?.name || decoded.name,
           email: userFromServer?.email || email,
         });
+        localStorage.setItem("userId", userFromServer?._id || decoded?.id || "");
       } catch {
         setUser(userFromServer || null);
       }

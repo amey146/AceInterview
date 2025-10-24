@@ -40,13 +40,14 @@ export default function InterviewReport() {
         const storedLevel = responses[0]?.level || localStorage.getItem("selectedLevel") || "Entry-Level";
 
         const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
         if (token) {
             await handleSave(
                 reportData.average_score,
                 reportData.overall_feedback,
                 storedRole,
                 storedLevel,
-                responses[0]?.username || "Anonymous"
+                userId || "Anonymous"
             );
         }
         setLoading(false);
@@ -56,12 +57,12 @@ export default function InterviewReport() {
     if (loading) {
         return (
             <>
-                <Navbar />
+                
                 <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-[var(--background)] text-[var(--foreground)]">
                     <Loader2 className="w-10 h-10 animate-spin mb-6 text-[var(--primary)]" />
                     <p className="text-lg font-medium">Generating your interview report...</p>
                 </div>
-                <Footer />
+                
             </>
         );
     }
@@ -94,7 +95,7 @@ export default function InterviewReport() {
 
     return (
         <>
-            <Navbar />
+            
             <div className="min-h-screen flex flex-col items-center justify-start bg-[var(--background)] text-[var(--foreground)] p-8 space-y-8">
                 {/* Header with celebration */}
                 <div className="text-center space-y-3 pt-6">
@@ -141,7 +142,7 @@ export default function InterviewReport() {
                 </div>
 
             </div >
-            <Footer />
+            
         </>
     );
 }

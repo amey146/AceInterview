@@ -7,11 +7,9 @@ import StepsSection from "../components/StepsSection";
 export default function LandingPage() {
     return (
         <>
-            <Navbar />
             <HeroSection />
             <FeatureSection />
             <StepsSection />
-            <Footer />
         </>
     );
 }

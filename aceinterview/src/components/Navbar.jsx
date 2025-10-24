@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserCircle2 } from "lucide-react";
 
@@ -6,8 +7,7 @@ export default function Navbar() {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        if (token) setIsSignedIn(true);
-        else setIsSignedIn(false);
+        setIsSignedIn(!!token);
     }, []);
 
     return (
@@ -20,24 +20,24 @@ export default function Navbar() {
         >
             <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
                 {/* Brand */}
-                <a
-                    href="/"
+                <Link
+                    to="/"
                     className="text-2xl font-extrabold tracking-tight text-[var(--primary)]"
                 >
                     Ace<span className="text-[var(--accent)]">Interview</span>
-                </a>
+                </Link>
 
                 {/* Links */}
                 <div className="hidden md:flex items-center gap-8">
                     {[
-                        { name: "Home", href: "/" },
-                        { name: "Practice", href: "/practicerole" },
-                        { name: "Reports", href: "/reportsview" },
-                        { name: "About", href: "/about" },
+                        { name: "Home", to: "/" },
+                        { name: "Practice", to: "/practicerole" },
+                        { name: "Reports", to: "/reportsview" },
+                        { name: "About", to: "/about" },
                     ].map((link) => (
-                        <a
+                        <Link
                             key={link.name}
-                            href={link.href}
+                            to={link.to}
                             className="
                                 relative text-base font-medium transition-colors duration-300 
                                 hover:text-[var(--primary)] 
@@ -47,14 +47,14 @@ export default function Navbar() {
                             "
                         >
                             {link.name}
-                        </a>
+                        </Link>
                     ))}
 
                     {/* Auth Section */}
                     <div className="ml-6">
                         {isSignedIn ? (
-                            <a
-                                href="/profile"
+                            <Link
+                                to="/profile"
                                 className="
                                     flex items-center justify-center w-10 h-10 rounded-full 
                                     border border-[var(--primary)]/60 
@@ -64,10 +64,10 @@ export default function Navbar() {
                                 title="Profile"
                             >
                                 <UserCircle2 className="w-6 h-6 text-[var(--primary)]" />
-                            </a>
+                            </Link>
                         ) : (
-                            <a
-                                href="/login"
+                            <Link
+                                to="/login"
                                 className="
                                     px-5 py-2.5 text-sm font-semibold rounded-full 
                                     border border-[var(--primary)] text-[var(--primary)]
@@ -76,7 +76,7 @@ export default function Navbar() {
                                 "
                             >
                                 Login / Register
-                            </a>
+                            </Link>
                         )}
                     </div>
                 </div>

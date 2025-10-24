@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import {
     Edit3,
     Trash2,
@@ -22,13 +22,19 @@ export default function ReportsPage() {
     const [reports, setReports] = useState(mockReports);
     const navigate = useNavigate();
 
+
     async function handleFetchReports() {
-        if (fromDate && toDate) {
-            // Fetch reports from API based on date range
-            const fetchedReports = await getReports(fromDate, toDate, "asgprojects1464");
-            setReports(fetchedReports || []);
+        try {
+            const userId = localStorage.getItem("userId");
+            if (fromDate && toDate) {
+                // Fetch reports from API based on date range
+                const fetchedReports = await getReports(fromDate, toDate, userId);
+                setReports(fetchedReports || []);
+            }
+            console.log("I'm inside ReportsView.jsx");
+        } catch (error) {
+            console.error("Error fetching reports:", error);
         }
-        console.log("I'm inside ReportsView.jsx");
     };
 
     async function handleSummarize() {
@@ -45,7 +51,7 @@ export default function ReportsPage() {
 
     return (
         <>
-            <Navbar />
+
             <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] py-8 px-4">
                 <div className="max-w-5xl mx-auto">
                     {/* Header Section */}
@@ -156,7 +162,6 @@ export default function ReportsPage() {
                     )}
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

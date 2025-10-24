@@ -51,7 +51,7 @@ export default function RoleSelectionPage() {
 
     return (
         <>
-            <Navbar />
+
             <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)] text-[var(--foreground)] font-sans px-4">
                 <section className="flex flex-col items-center gap-12 py-8 w-full max-w-5xl">
                     {/* Experience Level */}
@@ -175,7 +175,6 @@ export default function RoleSelectionPage() {
                     {isChecking ? "Checking..." : "Continue"}
                 </button>
             </div>
-            <Footer />
         </>
     );
 }
