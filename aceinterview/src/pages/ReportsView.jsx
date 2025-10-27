@@ -40,14 +40,28 @@ export default function ReportsPage() {
     async function handleSummarize() {
         if (reports.length === 0) return;
         const summary = reports.map(r => r.feedback).join(" ");
+
         try {
             const response = await getAISummarization(summary);
+            var scores = [];
+
+            for (let i = 0; i < reports.length; i++) {
+                scores.push(reports[i].score);
+                console.log(scores[i]);
+            }
+
+            console.log("Reports Scores Array:", scores);
             console.log("AI Summary:", response);
-            navigate('/reportsdashboard', { state: { data: response, fromDate, toDate } });
+
+            navigate("/reportsdashboard", {
+                state: { data: response, fromDate, toDate, scores },
+            });
         } catch (error) {
             console.error("Error fetching AI summary:", error);
         }
     }
+
+
 
     return (
         <>

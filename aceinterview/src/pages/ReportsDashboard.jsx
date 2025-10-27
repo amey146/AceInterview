@@ -9,6 +9,16 @@ import {
     Star,
     ScrollText,
 } from "lucide-react";
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from "recharts";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,7 +26,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function DashboardPage({ onBack }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const { data, fromDate, toDate } = location.state || {};
+    const { data, fromDate, toDate, scores } = location.state || {};
 
     const [loading, setLoading] = useState(true);
     const [invalidData, setInvalidData] = useState(false);
@@ -97,6 +107,12 @@ export default function DashboardPage({ onBack }) {
             </>
         );
     }
+    // Convert scores array to Recharts data format
+    const trendData = (scores || []).map((value, index) => ({
+        date: `Interview ${index + 1}`,
+        score: value,
+    }));
+
 
     // Main Dashboard JSX
     return (
@@ -188,6 +204,49 @@ export default function DashboardPage({ onBack }) {
                             )}
                         </div>
                     </div>
+                    {/* Performance Trend Chart */}
+                    {/* Performance Trend Chart */}
+                    <div className="mb-8 p-6 rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)]
+  shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] transition">
+                        <div className="flex items-center gap-2 mb-4">
+                            <TrendingUp size={20} className="text-[var(--primary)]" />
+                            <h2 className="text-xl font-semibold">Performance Trend</h2>
+                        </div>
+                        <p className="text-[var(--muted-foreground)] mb-4">
+                            Progress of your overall scores across recent interviews
+                        </p>
+
+                        {scores && scores.length > 0 ? (
+                            <ResponsiveContainer width="100%" height={300}>
+                                <LineChart
+                                    data={scores.map((value, index) => ({
+                                        date: `Interview ${index + 1}`,
+                                        score: value,
+                                    }))}
+                                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis domain={[0, 10]} />
+                                    <Tooltip />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="score"
+                                        stroke="var(--primary)"
+                                        strokeWidth={2.5}
+                                        dot={{ r: 5 }}
+                                        activeDot={{ r: 8 }}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        ) : (
+                            <p className="text-[var(--muted-foreground)] text-center py-10">
+                                No score data available to plot.
+                            </p>
+                        )}
+                    </div>
+
+
 
                     {/* Overall Summary */}
                     <div className="mb-6 p-6 rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)]
