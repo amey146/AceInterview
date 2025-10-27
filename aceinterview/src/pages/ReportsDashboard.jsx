@@ -101,7 +101,7 @@ export default function DashboardPage({ onBack }) {
     // Main Dashboard JSX
     return (
         <>
-            <Navbar />
+
             <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] py-8 px-4">
                 <div className="max-w-6xl mx-auto">
                     {/* Header */}

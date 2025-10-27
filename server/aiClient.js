@@ -15,31 +15,39 @@ export async function getAIQuestion(selectedRole, level, quantity = 5) {
         throw new Error("Invalid 'selectedRole' passed to getAIQuestion: missing or empty 'technologies' array");
     }
 
-    // Prepare concise prompt
     const techList = technologies.join(", ");
 
+    // 🔹 Dynamic temperature for creativity per level
+    const levelTemp = {
+        "Absolute Beginner": 0.4,
+        "Entry-level": 0.5,
+        "Intermediate": 0.6,
+        "Advanced": 0.7,
+        "Expert": 0.8,
+    }[level] || 0.6;
+
+    // 🔹 Super short, Llama-friendly prompt
     const prompt = `
-Generate ${quantity} short and relevant interview questions for a ${level}-level ${mainRole}.
-Focus on these technologies: ${techList}.
-Each question should be clear, realistic, and under 25 words.
-Return only a JSON array of strings, for example:
-["Question 1", "Question 2", ...]
+Generate ${quantity} ${level} interview questions for a ${mainRole}.
+Tech: ${techList}.
+Rules:
+- Keep it under 20 words
+- Use simple words
+- Match the level difficulty exactly
+Return JSON array only: ["Q1", "Q2", ...]
 `;
 
     const chatCompletion = await groq.chat.completions.create({
         model: "llama-3.1-8b-instant",
-        temperature: 0.7,
-        max_completion_tokens: 300,
+        temperature: levelTemp,
+        max_completion_tokens: 250,
         messages: [
             {
                 role: "system",
                 content:
-                    "You are a professional interviewer. Generate concise and realistic interview questions. Only output a valid JSON array of strings.",
+                    "You are a strict interviewer. Always follow instructions and output only a JSON array of questions.",
             },
-            {
-                role: "user",
-                content: prompt,
-            },
+            { role: "user", content: prompt },
         ],
     });
 
@@ -54,6 +62,7 @@ Return only a JSON array of strings, for example:
 
     return questions;
 }
+
 
 
 

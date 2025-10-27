@@ -23,13 +23,12 @@ export default function InterviewPage({ role, level }) {
 
     async function fetchAllQuestions() {
         setLoading(true);
-        const storedRole = localStorage.getItem("selectedRole") || "Software Engineer";
+        const storedRole = JSON.parse(localStorage.getItem("selectedRole")) || { mainRole: "Software Engineer", technologies: [] };
         const storedLevel = localStorage.getItem("selectedLevel") || "Entry-Level";
         const numQuestions = Number(localStorage.getItem("numQuestions")) || 5;
 
-
-        //fetch all at once
         const questions = await fetchAIQuestion(storedRole, storedLevel, numQuestions);
+
         setQuestions(questions);
         setCurrentQuestion(questions[0]);
         setLoading(false);
@@ -56,12 +55,12 @@ export default function InterviewPage({ role, level }) {
     if (loading) {
         return (
             <>
-                
+
                 <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-[var(--background)] text-[var(--foreground)]">
                     <Loader2 className="w-8 h-8 animate-spin mb-4" />
                     <p>Loading...</p>
                 </div>
-                
+
             </>
         );
     }
@@ -93,7 +92,7 @@ export default function InterviewPage({ role, level }) {
                     </button>
                 </div>
             </div>
-            
+
         </>
     );
 }

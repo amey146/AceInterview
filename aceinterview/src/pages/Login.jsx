@@ -90,9 +90,9 @@ export default function Login() {
                         className="
                             w-full py-2.5 rounded-lg font-semibold 
                             bg-[var(--primary)] text-white 
-                            hover:bg-[var(--primary-hover)]
+                            hover:bg-[var(--accent)]
                             flex items-center justify-center
-                            transition-all duration-300 disabled:opacity-70
+                            transition-all duration-300 disabled:opacity-70 cursor-pointer
                         "
                     >
                         {loading ? (

@@ -96,7 +96,7 @@ export default function ReportsPage() {
                             </div>
                             <button
                                 onClick={handleFetchReports}
-                                className="px-6 py-2.5 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-[var(--radius)] hover:shadow-[var(--shadow-lg)] transition font-medium shadow-[var(--shadow-sm)]"
+                                className="px-6 py-2.5 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-[var(--radius)] hover:shadow-[var(--shadow-lg)] transition font-medium shadow-[var(--shadow-sm)] cursor-pointer"
                             >
                                 Apply Filter
                             </button>
@@ -108,15 +108,15 @@ export default function ReportsPage() {
                         <div className="flex flex-wrap items-center justify-between gap-4">
                             <div>
                                 <h2 className="text-xl font-semibold mb-1">
-                                    Reports for: <span className="text-[var(--accent)]">Amey Gaikwad</span>
+                                    Reports: <span className="text-[var(--accent)]"></span>
                                 </h2>
                                 <p className="text-[var(--muted-foreground)] text-sm">{reports.length} report{reports.length !== 1 ? 's' : ''} found</p>
                             </div>
                             <button
                                 onClick={handleSummarize}
-                                className="px-6 py-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-[var(--radius)] hover:shadow-[var(--shadow-lg)] transition font-semibold shadow-[var(--shadow-md)] flex items-center gap-2 cursor-pointer"
+                                className="px-6 py-3 bg-[var(--primary)] text-[var(--primary-foreground)] rounded-[var(--radius)] hover:shadow-[var(--shadow-lg)] transition font-semibold shadow-[var(--shadow-md)] flex items-center gap-2 cursor-pointer"
                             >
-                                <Sparkles size={18} fill="#FFD700" stroke="#FFD700" />
+                                <Sparkles size={18} fill="#FFD700" stroke="#000" />
                                 Summarize Reports
                             </button>
                         </div>

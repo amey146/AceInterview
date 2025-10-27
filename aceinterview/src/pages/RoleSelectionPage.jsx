@@ -9,7 +9,7 @@ import { isProfessionalEngineer } from "../utils/api";
 
 export default function RoleSelectionPage() {
     const [selectedRole, setSelectedRole] = useState(""); // string or role object
-    const [selectedLevel, setSelectedLevel] = useState("Entry-Level");
+    const [selectedLevel, setSelectedLevel] = useState("Absolute Beginner");
     const [numQuestions, setNumQuestions] = useState(5);
     const [isCustom, setIsCustom] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -42,7 +42,7 @@ export default function RoleSelectionPage() {
         }
 
         // Store a normalized value
-        localStorage.setItem("selectedRole", roleValue);
+        localStorage.setItem("selectedRole", JSON.stringify(selectedRole));
         localStorage.setItem("selectedLevel", selectedLevel);
         localStorage.setItem("numQuestions", numQuestions);
 
