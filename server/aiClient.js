@@ -17,7 +17,7 @@ export async function getAIQuestion(selectedRole, level, quantity = 5) {
 
     const techList = technologies.join(", ");
 
-    // 🔹 Dynamic temperature for creativity per level
+    // Dynamic temperature for creativity per level
     const levelTemp = {
         "Absolute Beginner": 0.4,
         "Entry-level": 0.5,
@@ -26,7 +26,7 @@ export async function getAIQuestion(selectedRole, level, quantity = 5) {
         "Expert": 0.8,
     }[level] || 0.6;
 
-    // 🔹 Super short, Llama-friendly prompt
+    // Super short
     const prompt = `
 Generate ${quantity} ${level} interview questions for a ${mainRole}.
 Tech: ${techList}.

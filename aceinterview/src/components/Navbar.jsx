@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { UserCircle2 } from "lucide-react";
+import { useContext } from "react";
+import { AuthContext } from "./AuthProvider";
 
 export default function Navbar() {
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const { user, loading } = useContext(AuthContext);
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        setIsSignedIn(!!token);
-    }, []);
+    if (loading) return null; // or skeleton
+
+    const isSignedIn = !!user;
 
     return (
         <nav

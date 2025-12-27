@@ -69,7 +69,7 @@ export default function Profile() {
                         <UserCircle2 className="w-12 h-12 text-[var(--primary)]" />
                     </div>
 
-                    <h2 className="text-3xl font-bold text-[var(--primary)] mb-2">
+                    <h2 className="text-3xl font-extrabold text-[var(--primary)] mb-2">
                         Your Profile
                     </h2>
                     <p className="text-[var(--muted-foreground)] mb-8">

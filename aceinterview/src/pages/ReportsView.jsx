@@ -70,7 +70,7 @@ export default function ReportsPage() {
                 <div className="max-w-5xl mx-auto">
                     {/* Header Section */}
                     <div className="mb-8 text-center">
-                        <h1 className="text-4xl font-bold text-[var(--primary)] mb-2 drop-shadow-md">
+                        <h1 className="text-4xl font-extrabold text-[var(--primary)] mb-2 drop-shadow-md">
                             User Reports
                         </h1>
                         <p className="text-[var(--muted-foreground)]">View and manage feedback reports for candidates</p>

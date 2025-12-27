@@ -56,7 +56,7 @@ export default function RoleSelectionPage() {
                 <section className="flex flex-col items-center gap-12 py-8 w-full max-w-5xl">
                     {/* Experience Level */}
                     <div className="text-center space-y-4 w-full max-w-3xl">
-                        <h2 className="text-4xl font-bold text-[var(--primary)] drop-shadow-md tracking-tight">
+                        <h2 className="text-4xl font-extrabold text-[var(--primary)] drop-shadow-md tracking-tight">
                             Select Your Experience Level
                         </h2>
                         <p className="text-[var(--muted-foreground)] text-lg leading-relaxed">
@@ -79,7 +79,7 @@ export default function RoleSelectionPage() {
 
                     {/* Role Selection */}
                     <div className="text-center space-y-4 w-full">
-                        <h2 className="text-4xl font-bold text-[var(--primary)] drop-shadow-md tracking-tight">
+                        <h2 className="text-4xl font-extrabold text-[var(--primary)] drop-shadow-md tracking-tight">
                             Select Your Role
                         </h2>
                         <p className="text-[var(--muted-foreground)] text-lg max-w-2xl mx-auto leading-relaxed">
@@ -104,7 +104,7 @@ export default function RoleSelectionPage() {
                 </section>
 
                 {/* Custom Role */}
-                <div className="my-5 w-full max-w-md">
+                {/* <div className="my-5 w-full max-w-md">
                     <input
                         type="text"
                         placeholder="Enter your custom role"
@@ -116,7 +116,7 @@ export default function RoleSelectionPage() {
                         }}
                         className="w-full p-4 text-xl rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)] shadow-clay focus:ring-2 focus:ring-[var(--ring)] transition"
                     />
-                </div>
+                </div> */}
 
                 {isError && (
                     <div
@@ -135,7 +135,7 @@ export default function RoleSelectionPage() {
                 {/* Number of Questions */}
                 <div className="my-5 w-full">
                     <div className="text-center space-y-4">
-                        <h2 className="text-4xl font-bold text-[var(--primary)] drop-shadow-md tracking-tight">
+                        <h2 className="text-4xl font-extrabold text-[var(--primary)] drop-shadow-md tracking-tight">
                             Select Number of Questions
                         </h2>
                         <p className="text-[var(--muted-foreground)] text-lg max-w-2xl mx-auto leading-relaxed">

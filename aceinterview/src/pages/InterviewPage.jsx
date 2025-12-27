@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import QuestionBox from "../components/QuestionBox";
 import AnswerInput from "../components/AnswerInput";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+    import Footer from "../components/Footer";
+    import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { fetchAIQuestion } from "../utils/api";
@@ -55,7 +55,6 @@ export default function InterviewPage({ role, level }) {
     if (loading) {
         return (
             <>
-
                 <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-[var(--background)] text-[var(--foreground)]">
                     <Loader2 className="w-8 h-8 animate-spin mb-4" />
                     <p>Loading...</p>
@@ -92,7 +91,6 @@ export default function InterviewPage({ role, level }) {
                     </button>
                 </div>
             </div>
-
         </>
     );
 }

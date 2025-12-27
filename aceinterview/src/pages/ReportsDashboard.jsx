@@ -122,7 +122,7 @@ export default function DashboardPage({ onBack }) {
                 <div className="max-w-6xl mx-auto">
                     {/* Header */}
                     <div className="mb-8 text-center">
-                        <h1 className="text-4xl font-bold text-[var(--primary)] mb-2 drop-shadow-md">
+                        <h1 className="text-4xl font-extrabold text-[var(--primary)] mb-2 drop-shadow-md">
                             Summary Dashboard
                         </h1>
                         <p className="text-[var(--muted-foreground)]">
